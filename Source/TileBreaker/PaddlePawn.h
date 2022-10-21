@@ -39,5 +39,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* Camera;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class ABall> PongBallClass;
+
 	void MoveXDirection(float axisValue);
+	void CreateBall();
 };

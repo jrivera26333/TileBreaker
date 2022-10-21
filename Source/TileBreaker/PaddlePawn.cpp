@@ -5,6 +5,7 @@
 #include "Components/BoxComponent.h"
 #include "PaperSpriteComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Ball.h"
 #include "Camera/CameraComponent.h"
 
 // Sets default values
@@ -13,11 +14,8 @@ APaddlePawn::APaddlePawn()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	PaddleCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionBox"));
-	RootComponent = PaddleCollision;
-
 	PaddleMesh = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("PaddleSprite"));
-	PaddleMesh->SetupAttachment(PaddleCollision);
+	RootComponent = PaddleMesh;
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	SpringArm->SetupAttachment(PaddleCollision);
@@ -30,7 +28,7 @@ APaddlePawn::APaddlePawn()
 void APaddlePawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	CreateBall();
 }
 
 // Called every frame
@@ -51,4 +49,9 @@ void APaddlePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 void APaddlePawn::MoveXDirection(float movementScaler)
 {
 	AddMovementInput(FVector::LeftVector, movementScaler);
+}
+
+void APaddlePawn::CreateBall()
+{
+	GetWorld()->SpawnActor<ABall>(PongBallClass);
 }
