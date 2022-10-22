@@ -6,6 +6,8 @@
 #include "PaperSpriteComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Ball.h"
+#include "TileBreakerGameModeBase.h"
+#include "Kismet/GameplayStatics.h"
 #include "Camera/CameraComponent.h"
 
 // Sets default values
@@ -17,12 +19,6 @@ APaddlePawn::APaddlePawn()
 	PaddleMesh = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("PaddleSprite"));
 	PaddleMesh->SetSimulatePhysics(true);
 	RootComponent = PaddleMesh;
-
-	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	SpringArm->SetupAttachment(PaddleCollision);
-
-	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	Camera->SetupAttachment(SpringArm);
 }
 
 // Called when the game starts or when spawned
@@ -30,6 +26,9 @@ void APaddlePawn::BeginPlay()
 {
 	Super::BeginPlay();
 	CreateBall();
+
+	ATileBreakerGameModeBase* TileBreakerGameModeBase = Cast<ATileBreakerGameModeBase>(UGameplayStatics::GetGameMode(this));
+	TileBreakerGameModeBase->OnBallReset.AddDynamic(this, &APaddlePawn::ResetPosition);
 }
 
 // Called every frame
@@ -50,13 +49,18 @@ void APaddlePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 void APaddlePawn::MoveXDirection(float movementScaler)
 {
-	if(HasLaunchedBall)
+	//if(HasLaunchedBall)
 		AddMovementInput(FVector::LeftVector, movementScaler);
 }
 
 void APaddlePawn::CreateBall()
 {
 	CurrentBall = GetWorld()->SpawnActor<ABall>(PongBallClass);
+}
+
+void APaddlePawn::ResetPosition()
+{
+	PaddleMesh->SetWorldLocation(FVector::ZeroVector);
 }
 
 void APaddlePawn::LaunchBall()

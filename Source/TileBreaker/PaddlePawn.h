@@ -49,4 +49,7 @@ private:
 	void MoveXDirection(float axisValue);
 	void CreateBall();
 	void LaunchBall();
+
+	UFUNCTION()
+	void ResetPosition();
 };
