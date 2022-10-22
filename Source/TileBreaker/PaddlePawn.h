@@ -42,6 +42,11 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<class ABall> PongBallClass;
 
+	ABall* CurrentBall;
+
+	bool HasLaunchedBall;
+
 	void MoveXDirection(float axisValue);
 	void CreateBall();
+	void LaunchBall();
 };

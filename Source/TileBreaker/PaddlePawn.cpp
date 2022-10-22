@@ -15,6 +15,7 @@ APaddlePawn::APaddlePawn()
 	PrimaryActorTick.bCanEverTick = true;
 
 	PaddleMesh = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("PaddleSprite"));
+	PaddleMesh->SetSimulatePhysics(true);
 	RootComponent = PaddleMesh;
 
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
@@ -44,14 +45,27 @@ void APaddlePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	PlayerInputComponent->BindAxis("LateralMovement", this, &APaddlePawn::MoveXDirection);
+	PlayerInputComponent->BindAction("FireBall", IE_Pressed, this, &APaddlePawn::LaunchBall);
 }
 
 void APaddlePawn::MoveXDirection(float movementScaler)
 {
-	AddMovementInput(FVector::LeftVector, movementScaler);
+	if(HasLaunchedBall)
+		AddMovementInput(FVector::LeftVector, movementScaler);
 }
 
 void APaddlePawn::CreateBall()
 {
-	GetWorld()->SpawnActor<ABall>(PongBallClass);
+	CurrentBall = GetWorld()->SpawnActor<ABall>(PongBallClass);
+}
+
+void APaddlePawn::LaunchBall()
+{
+	UPaperSpriteComponent* PaperSprite = Cast<UPaperSpriteComponent>(CurrentBall->GetRootComponent());
+	if (IsValid(PaperSprite) && !HasLaunchedBall)
+	{
+		PaperSprite->SetSimulatePhysics(true);
+		PaperSprite->AddImpulse(FVector::UpVector * 100000);
+		HasLaunchedBall = true;
+	}
 }

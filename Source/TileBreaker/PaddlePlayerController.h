@@ -13,5 +13,4 @@ UCLASS()
 class TILEBREAKER_API APaddlePlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
 };
