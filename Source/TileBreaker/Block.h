@@ -3,17 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
-#include "PaddlePawn.generated.h"
+#include "GameFramework/Actor.h"
+#include "PaperSpriteComponent.h"
+#include "Block.generated.h"
 
 UCLASS()
-class TILEBREAKER_API APaddlePawn : public APawn
+class TILEBREAKER_API ABlock : public AActor
 {
 	GENERATED_BODY()
-
-public:
-	// Sets default values for this pawn's properties
-	APaddlePawn();
+	
+public:	
+	// Sets default values for this actor's properties
+	ABlock();
 
 protected:
 	// Called when the game starts or when spawned
@@ -23,24 +24,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UPaperSpriteComponent* PaddleMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<class ABall> PongBallClass;
+	TArray<TSubclassOf<class ABlockCombination>> Combinations;
 
-	ABall* CurrentBall;
-
-	bool HasLaunchedBall;
-
-	void MoveXDirection(float axisValue);
-	void CreateBall();
-	void LaunchBall();
-
-	UFUNCTION()
-	void ResetPosition();
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class ABlockCombination> TestClass;
 };
