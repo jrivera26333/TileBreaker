@@ -26,11 +26,13 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	class UPaperSpriteComponent* PaddleMesh;
+	class UUDA_BlockContainer* BallDataCollection;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	TArray<TSubclassOf<class ABlockCombination>> Combinations;
+	class UPaperSpriteComponent* BlockMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<class ABlockCombination> TestClass;
+	USceneComponent* RotaterSceneComponent;
+
+	struct FBlockSet* CurrentBlock;
 };
