@@ -11,5 +11,5 @@ void APaddlePlayerController::BeginPlay()
 	GameplayUIWidget = CreateWidget<UGameplayWidget>(GetWorld(), GameplayUIWidgetClass);
 	GameplayUIWidget->AddToViewport();
 	
-	//GameplayUIWidget->SetScoreLabel(0);
+	GameplayUIWidget->SetScoreLabel(0);
 }

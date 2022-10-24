@@ -17,4 +17,7 @@ class TILEBREAKER_API UGameplayWidget : public UUserWidget
 protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* ScoreLabel;
+
+public:
+	void SetScoreLabel(int TargetScore);
 };
