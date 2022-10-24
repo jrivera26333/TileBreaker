@@ -61,6 +61,7 @@ void APaddlePawn::CreateBall()
 void APaddlePawn::ResetPosition()
 {
 	PaddleMesh->SetWorldLocation(FVector::ZeroVector);
+	HasLaunchedBall = false;
 }
 
 void APaddlePawn::LaunchBall()
