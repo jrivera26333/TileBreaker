@@ -4,21 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
+#include "TileStruct.h"
 #include "UDA_BlockContainer.generated.h"
-
-
-USTRUCT(BlueprintType)
-struct FBlockSet
-{
-	GENERATED_USTRUCT_BODY()
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	class UPaperSprite* CompleteBlock;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	class UPaperSprite* WoundedBlock;
-};
-
 
 UCLASS(BlueprintType)
 class TILEBREAKER_API UUDA_BlockContainer : public UDataAsset
@@ -27,7 +14,7 @@ class TILEBREAKER_API UUDA_BlockContainer : public UDataAsset
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TArray<FBlockSet> BlockCombinations;
+	TArray<FTileStruct> BlockCombinations;
 
-	FBlockSet GetRandomBlock() const;
+	struct FTileStruct GetRandomBlock() const;
 };

@@ -2,6 +2,7 @@
 
 
 #include "Ball.h"
+#include "Block.h"
 #include "PaperSpriteComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "TileBreakerGameModeBase.h"
@@ -45,6 +46,13 @@ void ABall::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimit
 	FVector UnitVector = VelocityVector / Magnitude;
 
 	BallMesh->AddImpulse(UnitVector * 100000);
+	ABlock* HitBlock = Cast<ABlock>(OtherActor);
+
+	if (IsValid(HitBlock))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Hit Block!"));
+		HitBlock->OnHit();
+	}
 }
 
 void ABall::ResetPosition()

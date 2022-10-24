@@ -3,6 +3,7 @@
 
 #include "Block.h"
 #include "UDA_BlockContainer.h"
+#include "PaperSpriteComponent.h"
 #include "GameFramework/Actor.h"
 
 // Sets default values
@@ -23,12 +24,14 @@ ABlock::ABlock()
 void ABlock::BeginPlay()
 {
 	Super::BeginPlay();
-	if (BallDataCollection->GetRandomBlock().CompleteBlock)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Found!"));
-	}
 
-	BlockMesh->SetSprite(BallDataCollection->GetRandomBlock().CompleteBlock);
+	CurrentBlock = BallDataCollection->GetRandomBlock();
+
+	if (CurrentBlock.GetCompleteBlock())
+	{
+		BlockMesh->SetSprite(CurrentBlock.GetCompleteBlock());
+		UE_LOG(LogTemp, Warning, TEXT("Assigned Block!"));
+	}
 }
 
 // Called every frame
@@ -38,3 +41,10 @@ void ABlock::Tick(float DeltaTime)
 
 }
 
+void ABlock::OnHit()
+{
+	if(!IsWounded)
+		BlockMesh->SetSprite(CurrentBlock.GetWoundedBlock());
+	else
+		Destroy();
+}

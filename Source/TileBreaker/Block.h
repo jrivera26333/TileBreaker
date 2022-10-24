@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "PaperSpriteComponent.h"
+#include "TileStruct.h"
 #include "Block.generated.h"
 
 UCLASS()
@@ -23,6 +23,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	void OnHit();
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -34,5 +35,7 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	USceneComponent* RotaterSceneComponent;
 
-	struct FBlockSet* CurrentBlock;
+	struct FTileStruct CurrentBlock;
+
+	bool IsWounded = false;
 };
