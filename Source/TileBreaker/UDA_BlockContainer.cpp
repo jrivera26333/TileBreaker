@@ -5,6 +5,6 @@
 
 FTileStruct UUDA_BlockContainer::GetRandomBlock() const
 {
-	return BlockCombinations[FMath::RandRange(0, BlockCombinations.Num())];
+	return BlockCombinations[FMath::RandRange(0, BlockCombinations.Num() -1)];
 }
 

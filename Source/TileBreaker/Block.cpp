@@ -43,8 +43,11 @@ void ABlock::Tick(float DeltaTime)
 
 void ABlock::OnHit()
 {
-	if(!IsWounded)
+	if (!IsWounded)
+	{
 		BlockMesh->SetSprite(CurrentBlock.GetWoundedBlock());
+		IsWounded = true;
+	}
 	else
 		Destroy();
 }
