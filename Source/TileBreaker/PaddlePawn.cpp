@@ -9,6 +9,8 @@
 #include "TileBreakerGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Camera/CameraComponent.h"
+#include "GameFramework/ProjectileMovementComponent.h"
+
 
 // Sets default values
 APaddlePawn::APaddlePawn()
@@ -66,11 +68,22 @@ void APaddlePawn::ResetPosition()
 
 void APaddlePawn::LaunchBall()
 {
-	UPaperSpriteComponent* PaperSprite = Cast<UPaperSpriteComponent>(CurrentBall->GetRootComponent());
-	if (IsValid(PaperSprite) && !HasLaunchedBall)
+	if (!HasLaunchedBall)
 	{
-		PaperSprite->SetSimulatePhysics(true);
-		PaperSprite->AddImpulse(FVector::UpVector * 100000);
+		auto ProjectileMovement = Cast<UProjectileMovementComponent>(CurrentBall->GetComponentByClass(UProjectileMovementComponent::StaticClass()));
+		if (IsValid(ProjectileMovement))
+		{
+			ProjectileMovement->Activate();
+			FDetachmentTransformRules Rules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, false);
+
+			CurrentBall->DetachFromActor(Rules);
+			UE_LOG(LogTemp, Warning, TEXT("Valid!"));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Not Valid!"));
+		}
+
 		HasLaunchedBall = true;
 	}
 }

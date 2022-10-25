@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "TileBreakerGameModeBase.h"
 #include "Engine/EngineTypes.h"
+#include "Components/SphereComponent.h"
 
 // Sets default values
 ABall::ABall()
@@ -14,15 +15,18 @@ ABall::ABall()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	SphereCollider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));
+	RootComponent = SphereCollider;
+
 	BallMesh = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("Ball"));
-	RootComponent = BallMesh;
+	BallMesh->SetupAttachment(SphereCollider);;
 }
 
 // Called when the game starts or when spawned
 void ABall::BeginPlay()
 {
 	Super::BeginPlay();
-	BallMesh->OnComponentHit.AddDynamic(this, &ABall::OnHit);
+	SphereCollider->OnComponentHit.AddDynamic(this, &ABall::OnHit);
 
 	//Subscribing to minus life events
 	ATileBreakerGameModeBase* TileBreakerGameModeBase = Cast<ATileBreakerGameModeBase>(UGameplayStatics::GetGameMode(this));
@@ -41,11 +45,12 @@ void ABall::Tick(float DeltaTime)
 
 void ABall::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	FVector VelocityVector = BallMesh->GetComponentVelocity();
-	float Magnitude = BallMesh->GetComponentVelocity().Size();
-	FVector UnitVector = VelocityVector / Magnitude;
+	//FVector VelocityVector = BallMesh->GetComponentVelocity();
+	//float Magnitude = BallMesh->GetComponentVelocity().Size();
+	//FVector UnitVector = VelocityVector / Magnitude;
 
-	BallMesh->AddImpulse(UnitVector * 100000);
+	//BallMesh->AddImpulse(UnitVector * 100000);
+	UE_LOG(LogTemp, Warning, TEXT("Hit"));
 	ABlock* HitBlock = Cast<ABlock>(OtherActor);
 
 	if (IsValid(HitBlock))

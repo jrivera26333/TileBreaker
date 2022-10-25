@@ -33,7 +33,10 @@ private:
 	class UPaperSpriteComponent* BlockMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	USceneComponent* RotaterSceneComponent;
+	class UBoxComponent* BoxCollision;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class USoundCue* HitSound;
 
 	struct FTileStruct CurrentBlock;
 

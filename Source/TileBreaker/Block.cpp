@@ -5,6 +5,10 @@
 #include "UDA_BlockContainer.h"
 #include "PaperSpriteComponent.h"
 #include "GameFramework/Actor.h"
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystem.h"
+#include "Components/BoxComponent.h"
 
 // Sets default values
 ABlock::ABlock()
@@ -12,12 +16,12 @@ ABlock::ABlock()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	RotaterSceneComponent = CreateDefaultSubobject<USceneComponent>(TEXT("Rotater"));
-	RootComponent = RotaterSceneComponent;
+	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Rotater"));
+	RootComponent = BoxCollision;
 
 	BlockMesh = CreateDefaultSubobject<UPaperSpriteComponent>(TEXT("Block"));
 	BlockMesh->SetMobility(EComponentMobility::Movable);
-	BlockMesh->SetupAttachment(RotaterSceneComponent);
+	BlockMesh->SetupAttachment(BoxCollision);
 }
 
 // Called when the game starts or when spawned
@@ -29,8 +33,7 @@ void ABlock::BeginPlay()
 
 	if (CurrentBlock.GetCompleteBlock())
 	{
-		BlockMesh->SetSprite(CurrentBlock.GetCompleteBlock());
-		UE_LOG(LogTemp, Warning, TEXT("Assigned Block!"));
+		BlockMesh->SetMaterial(0, CurrentBlock.GlowCompleteMaterial);
 	}
 }
 
@@ -43,9 +46,11 @@ void ABlock::Tick(float DeltaTime)
 
 void ABlock::OnHit()
 {
+	UGameplayStatics::PlaySoundAtLocation(this, HitSound, FVector::ZeroVector);
+
 	if (!IsWounded)
 	{
-		BlockMesh->SetSprite(CurrentBlock.GetWoundedBlock());
+		BlockMesh->SetMaterial(0, CurrentBlock.GlowWoundedMaterial);
 		IsWounded = true;
 	}
 	else

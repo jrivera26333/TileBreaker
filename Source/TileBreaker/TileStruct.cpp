@@ -3,6 +3,7 @@
 
 #include "TileStruct.h"
 #include "PaperSpriteComponent.h"
+#include "Materials/Material.h"
 
 UPaperSprite* FTileStruct::GetCompleteBlock() const
 {

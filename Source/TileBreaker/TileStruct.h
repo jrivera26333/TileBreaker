@@ -16,6 +16,12 @@ struct FTileStruct
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	class UPaperSprite* WoundedBlock;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	class UMaterialInstance* GlowCompleteMaterial;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	class UMaterialInstance* GlowWoundedMaterial;
+
 	UPaperSprite* GetCompleteBlock() const;
 	UPaperSprite* GetWoundedBlock() const;
 };
