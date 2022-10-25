@@ -35,11 +35,15 @@ private:
 
 	ABall* CurrentBall;
 
-	bool HasLaunchedBall;
+	bool HasLaunchedBall, HasHitPlay;
 
-	void MoveXDirection(float axisValue);
+	void MoveXDirection(float AxisValue);
 	void CreateBall();
 	void LaunchBall();
+	void SubscribeToBlockDestroyed();
+
+	UFUNCTION()
+	void SetHasHitPlay();
 
 	UFUNCTION()
 	void ResetPosition();

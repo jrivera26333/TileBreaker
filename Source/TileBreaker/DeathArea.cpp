@@ -36,8 +36,5 @@ void ADeathArea::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* Oth
 	if (OnBallDeath.IsBound())
 	{
 		OnBallDeath.Broadcast();
-		UE_LOG(LogTemp, Warning, TEXT("Bound!"));
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Hit Death Area!"));
 }

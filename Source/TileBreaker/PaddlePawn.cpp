@@ -6,10 +6,12 @@
 #include "PaperSpriteComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Ball.h"
-#include "TileBreakerGameModeBase.h"
+#include "BrickGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "GameplayWidget.h"
+#include "DeathArea.h"
 
 
 // Sets default values
@@ -28,9 +30,7 @@ void APaddlePawn::BeginPlay()
 {
 	Super::BeginPlay();
 	CreateBall();
-
-	ATileBreakerGameModeBase* TileBreakerGameModeBase = Cast<ATileBreakerGameModeBase>(UGameplayStatics::GetGameMode(this));
-	TileBreakerGameModeBase->OnBallReset.AddDynamic(this, &APaddlePawn::ResetPosition);
+	ResetPosition();
 }
 
 // Called every frame
@@ -51,8 +51,23 @@ void APaddlePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 void APaddlePawn::MoveXDirection(float movementScaler)
 {
-	//if(HasLaunchedBall)
+	if(HasHitPlay)
 		AddMovementInput(FVector::LeftVector, movementScaler);
+}
+
+void APaddlePawn::SetHasHitPlay()
+{
+	HasHitPlay = true;
+}
+
+void APaddlePawn::SubscribeToBlockDestroyed()
+{
+	ADeathArea* DeathArea = Cast<ADeathArea>(UGameplayStatics::GetActorOfClass(this, ADeathArea::StaticClass()));
+
+	if (IsValid(DeathArea))
+	{
+		DeathArea->OnBallDeath.AddDynamic(this, &APaddlePawn::ResetPosition);
+	}
 }
 
 void APaddlePawn::CreateBall()
@@ -68,7 +83,7 @@ void APaddlePawn::ResetPosition()
 
 void APaddlePawn::LaunchBall()
 {
-	if (!HasLaunchedBall)
+	if (!HasLaunchedBall && HasHitPlay)
 	{
 		auto ProjectileMovement = Cast<UProjectileMovementComponent>(CurrentBall->GetComponentByClass(UProjectileMovementComponent::StaticClass()));
 		if (IsValid(ProjectileMovement))

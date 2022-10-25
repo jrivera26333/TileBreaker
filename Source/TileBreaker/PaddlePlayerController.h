@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "PaddlePlayerController.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerControllerInit);
+
 /**
  * 
  */
@@ -18,17 +20,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-private:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	TSubclassOf<class UGameplayWidget> GameplayUIWidgetClass;
-
-	UGameplayWidget* GameplayUIWidget;
-	int Score = 0;
-
 public:
-	UFUNCTION()
-	void UpdateScore();
-
-	void ResetScore();
-	void SubscribeToBlockDestroyed();
+	FOnPlayerControllerInit OnPlayerControllerInit;
 };

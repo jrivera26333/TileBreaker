@@ -5,7 +5,7 @@
 #include "Block.h"
 #include "PaperSpriteComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "TileBreakerGameModeBase.h"
+#include "BrickGameInstance.h"
 #include "Engine/EngineTypes.h"
 #include "Components/SphereComponent.h"
 
@@ -27,13 +27,8 @@ void ABall::BeginPlay()
 {
 	Super::BeginPlay();
 	SphereCollider->OnComponentHit.AddDynamic(this, &ABall::OnHit);
-
-	//Subscribing to minus life events
-	ATileBreakerGameModeBase* TileBreakerGameModeBase = Cast<ATileBreakerGameModeBase>(UGameplayStatics::GetGameMode(this));
-	TileBreakerGameModeBase->OnBallReset.AddDynamic(this, &ABall::ResetPosition);
 	
 	ResetPosition();
-	//BallMesh->SetSimulatePhysics(true);
 }
 
 // Called every frame
@@ -45,11 +40,6 @@ void ABall::Tick(float DeltaTime)
 
 void ABall::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	//FVector VelocityVector = BallMesh->GetComponentVelocity();
-	//float Magnitude = BallMesh->GetComponentVelocity().Size();
-	//FVector UnitVector = VelocityVector / Magnitude;
-
-	//BallMesh->AddImpulse(UnitVector * 100000);
 	UE_LOG(LogTemp, Warning, TEXT("Hit"));
 	ABlock* HitBlock = Cast<ABlock>(OtherActor);
 

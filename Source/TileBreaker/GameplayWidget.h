@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "GameplayWidget.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnButtonPressed);
+
 /**
  * 
  */
@@ -18,6 +20,21 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UTextBlock* ScoreLabel;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* TitleLabel;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UButton* PlayButton;
+
+	virtual void NativeConstruct() override;
+
+	UFUNCTION()
+	void PlayButtonClicked();
+
 public:
 	void SetScoreLabel(int TargetScore);
+
+	void SetTitleLabelVisibility(bool IsVisible);
+
+	FOnButtonPressed OnPlayButtonPressed;
 };
