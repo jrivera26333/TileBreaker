@@ -11,17 +11,11 @@ struct FTileStruct
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	class UPaperSprite* CompleteBlock;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	class UPaperSprite* WoundedBlock;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	class UMaterialInstance* GlowCompleteMaterial;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	class UMaterialInstance* GlowWoundedMaterial;
 
-	UPaperSprite* GetCompleteBlock() const;
-	UPaperSprite* GetWoundedBlock() const;
+	UMaterialInstance* GetCompleteMaterial() const;
+	UMaterialInstance* GetWoundedMaterial() const;
 };

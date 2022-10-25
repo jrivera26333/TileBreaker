@@ -7,6 +7,8 @@
 #include "TileStruct.h"
 #include "Block.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBrickDeath);
+
 UCLASS()
 class TILEBREAKER_API ABlock : public AActor
 {
@@ -24,6 +26,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 	void OnHit();
+	FOnBrickDeath OnBrickDeath;
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

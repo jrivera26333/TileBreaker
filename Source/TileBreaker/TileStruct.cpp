@@ -5,12 +5,12 @@
 #include "PaperSpriteComponent.h"
 #include "Materials/Material.h"
 
-UPaperSprite* FTileStruct::GetCompleteBlock() const
+UMaterialInstance* FTileStruct::GetCompleteMaterial() const
 {
-	return CompleteBlock;
+	return GlowCompleteMaterial;
 }
 
-UPaperSprite* FTileStruct::GetWoundedBlock() const
+UMaterialInstance* FTileStruct::GetWoundedMaterial() const
 {
-	return WoundedBlock;
+	return GlowWoundedMaterial;
 }

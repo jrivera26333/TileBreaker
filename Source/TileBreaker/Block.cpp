@@ -31,9 +31,9 @@ void ABlock::BeginPlay()
 
 	CurrentBlock = BallDataCollection->GetRandomBlock();
 
-	if (CurrentBlock.GetCompleteBlock())
+	if (CurrentBlock.GetCompleteMaterial())
 	{
-		BlockMesh->SetMaterial(0, CurrentBlock.GlowCompleteMaterial);
+		BlockMesh->SetMaterial(0, CurrentBlock.GetCompleteMaterial());
 	}
 }
 
@@ -50,9 +50,12 @@ void ABlock::OnHit()
 
 	if (!IsWounded)
 	{
-		BlockMesh->SetMaterial(0, CurrentBlock.GlowWoundedMaterial);
+		BlockMesh->SetMaterial(0, CurrentBlock.GetWoundedMaterial());
 		IsWounded = true;
 	}
 	else
+	{
+		OnBrickDeath.Broadcast();
 		Destroy();
+	}
 }

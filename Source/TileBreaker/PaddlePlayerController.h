@@ -23,4 +23,12 @@ private:
 	TSubclassOf<class UGameplayWidget> GameplayUIWidgetClass;
 
 	UGameplayWidget* GameplayUIWidget;
+	int Score = 0;
+
+public:
+	UFUNCTION()
+	void UpdateScore();
+
+	void ResetScore();
+	void SubscribeToBlockDestroyed();
 };
