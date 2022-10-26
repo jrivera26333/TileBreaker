@@ -8,6 +8,7 @@
 #include "BrickGameInstance.h"
 #include "Engine/EngineTypes.h"
 #include "Components/SphereComponent.h"
+#include "DeathArea.h"
 
 // Sets default values
 ABall::ABall()
@@ -27,7 +28,8 @@ void ABall::BeginPlay()
 {
 	Super::BeginPlay();
 	SphereCollider->OnComponentHit.AddDynamic(this, &ABall::OnHit);
-	
+
+	SubscribeToOnDeath();
 	ResetPosition();
 }
 
@@ -36,6 +38,23 @@ void ABall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+// Called every frame
+void ABall::SubscribeToOnDeath()
+{
+	ADeathArea* DeathArea = Cast<ADeathArea>(UGameplayStatics::GetActorOfClass(this, ADeathArea::StaticClass()));
+
+	if (IsValid(DeathArea))
+	{
+		DeathArea->OnBallDeath.AddDynamic(this, &ABall::DestroyBall);
+	}
+
+}
+
+void ABall::DestroyBall()
+{	
+	Destroy();
 }
 
 void ABall::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)

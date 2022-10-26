@@ -15,8 +15,3 @@ void UGameplayWidget::SetScoreLabel(int Score)
 	FText CachedText = FText::FromString(TEXT("Score: ") + FString::FromInt(Score));
 	ScoreLabel->SetText(CachedText);
 }
-
-void UGameplayWidget::SetTitleLabelVisibility(bool IsVisible)
-{
-
-}

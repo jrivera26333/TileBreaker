@@ -28,6 +28,4 @@ protected:
 
 public:
 	void SetScoreLabel(int TargetScore);
-
-	void SetTitleLabelVisibility(bool IsVisible);
 };

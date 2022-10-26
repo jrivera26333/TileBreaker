@@ -71,6 +71,7 @@ void APaddlePawn::SubscribeToBallDestroyed()
 	if (IsValid(DeathArea))
 	{
 		DeathArea->OnBallDeath.AddDynamic(this, &APaddlePawn::ResetPosition);
+		DeathArea->OnBallDeath.AddDynamic(this, &APaddlePawn::CreateBall);
 	}
 }
 

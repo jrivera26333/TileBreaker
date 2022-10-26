@@ -13,6 +13,9 @@ void APaddlePlayerController::BeginPlay()
 	Super::BeginPlay();
 	SetShowMouseCursor(true);
 	CreateUIWidget();
+
+	SubscribeToBallDestroyed();
+	SubscribeToBlockDestroyed();
 }
 
 void APaddlePlayerController::CreateUIWidget()
@@ -38,6 +41,7 @@ void APaddlePlayerController::AddLife()
 
 void APaddlePlayerController::UpdateScore()
 {
+	UE_LOG(LogTemp, Warning, TEXT("Updated Score!"));
 	GameplayUIWidget->SetScoreLabel(++Score);
 }
 
@@ -53,6 +57,7 @@ void APaddlePlayerController::SubtractLife()
 	if (CurrentAmountOfBallsRemaining <= 0)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Game Over!"));
+		UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()), false);
 	}
 	else
 	{

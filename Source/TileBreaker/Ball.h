@@ -35,4 +35,9 @@ private:
 
 	UFUNCTION()
 	void ResetPosition();
+
+	void SubscribeToOnDeath();
+
+	UFUNCTION()
+	void DestroyBall();
 };

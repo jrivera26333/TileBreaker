@@ -41,11 +41,12 @@ private:
 	bool HasLaunchedBall, HasHitPlay;
 
 	void MoveXDirection(float AxisValue);
-	void CreateBall();
+	void SubscribeToBallDestroyed();
 	void LaunchBall();
 
 	UFUNCTION()
 	void ResetPosition();
 
-	void SubscribeToBallDestroyed();
+	UFUNCTION()
+	void CreateBall();
 };
