@@ -26,6 +26,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION(BlueprintCallable)
+	void SetHasHitPlay();
+
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UPaperSpriteComponent* PaddleMesh;
@@ -40,11 +43,9 @@ private:
 	void MoveXDirection(float AxisValue);
 	void CreateBall();
 	void LaunchBall();
-	void SubscribeToBlockDestroyed();
-
-	UFUNCTION()
-	void SetHasHitPlay();
 
 	UFUNCTION()
 	void ResetPosition();
+
+	void SubscribeToBallDestroyed();
 };

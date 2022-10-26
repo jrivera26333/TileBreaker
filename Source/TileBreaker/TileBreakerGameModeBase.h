@@ -6,9 +6,6 @@
 #include "GameFramework/GameModeBase.h"
 #include "TileBreakerGameModeBase.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class TILEBREAKER_API ATileBreakerGameModeBase : public AGameModeBase
 {

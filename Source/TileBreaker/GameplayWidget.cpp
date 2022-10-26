@@ -7,20 +7,7 @@
 
 void UGameplayWidget::NativeConstruct()
 {
-	if (PlayButton)
-	{
-		PlayButton->OnClicked.AddDynamic(this, &UGameplayWidget::PlayButtonClicked);
-	}
-
 	ScoreLabel->SetVisibility(ESlateVisibility::Hidden);
-}
-
-void UGameplayWidget::PlayButtonClicked()
-{
-	PlayButton->SetVisibility(ESlateVisibility::Hidden);
-	ScoreLabel->SetVisibility(ESlateVisibility::Visible);
-
-	OnPlayButtonPressed.Broadcast();
 }
 
 void UGameplayWidget::SetScoreLabel(int Score)

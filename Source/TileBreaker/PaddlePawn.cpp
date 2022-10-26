@@ -12,6 +12,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "GameplayWidget.h"
 #include "DeathArea.h"
+#include "PaddlePlayerController.h"
 
 
 // Sets default values
@@ -31,6 +32,8 @@ void APaddlePawn::BeginPlay()
 	Super::BeginPlay();
 	CreateBall();
 	ResetPosition();
+
+	SubscribeToBallDestroyed();
 }
 
 // Called every frame
@@ -57,10 +60,11 @@ void APaddlePawn::MoveXDirection(float movementScaler)
 
 void APaddlePawn::SetHasHitPlay()
 {
+	UE_LOG(LogTemp, Warning, TEXT("Play Hit"));
 	HasHitPlay = true;
 }
 
-void APaddlePawn::SubscribeToBlockDestroyed()
+void APaddlePawn::SubscribeToBallDestroyed()
 {
 	ADeathArea* DeathArea = Cast<ADeathArea>(UGameplayStatics::GetActorOfClass(this, ADeathArea::StaticClass()));
 
